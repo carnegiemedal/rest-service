@@ -1,0 +1,64 @@
+openapi: 3.0.3
+info:
+  title: Postal code API - OpenAPI 3.0
+  version: 1.0.11
+paths:
+  /postal-code:
+    post:
+      summary: Add postal code
+      description: Add postal code for country code
+      operationId: addPostalCode
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Country'
+        required: true
+      responses:
+        '200':
+          description: Successful operation
+        '400':
+          description: Invalid input
+    get:
+      summary: Get postal code
+      description: Get postal code info by country code
+      operationId: getPostalCode
+      parameters:
+        - name: country_code
+          in: query
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Postal code
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PostalCode'
+components:
+  schemas:
+    Country:
+      required:
+        - code
+      type: object
+      properties:
+        code:
+          type: string
+          example: NL
+    PostalCode:
+      type: object
+      properties:
+        country_name:
+          type: string
+        format:
+          type: string
+        regex:
+          type: string
+  requestBodies:
+    Country:
+      description: Country for which postal code needs to be added
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Country'
